@@ -1,2 +1,2 @@
 test git remote
-remote modify
+remote modify 1
