@@ -1,2 +1,3 @@
 test git remote
 remote modify 2
+g
