@@ -1,0 +1,162 @@
+/**
+ * 后台主css
+ * author wl
+ * data 2017-01-04
+ */
+html{
+	height:100%;
+}
+
+*{
+	margin:0;padding:0;
+}
+
+div{
+	display:block;
+}
+
+dt{
+	display: block;
+}
+
+.clearBoth{
+	clear:both;
+}
+
+body{
+	background-color: #f1f1f1;
+	font-family:"宋体";
+	font-size:14px;
+	height:100%;
+	overflow:hidden;
+}
+
+a{
+	color:#326e99;
+	text-decoration:none;
+}
+
+img{ 
+   border-style:none; /* 解决ie8有边框问题 */
+} 
+
+.main{
+   	width:100%;
+   	height:100%;
+}
+
+.top{
+	width:100%;
+	min-height:95px;
+	height:10%;
+	background: url(../../img/top_bg.gif) repeat-x bottom;
+}
+
+.logo{
+	width:255px;
+	height:100%;
+	float:left;
+	background: url(../../img/logo.png) no-repeat;
+}
+
+.topLink{
+	width:400px;
+	height:20px;
+	float:right;
+	margin-top:60px;
+	text-align:right;
+	line-height:20px;
+}
+
+.topLink li{
+	list-style: none;
+	float:right;
+	padding:0px 13px;
+	background:url(../../img/nav_line.gif) no-repeat right
+}
+
+.topLink a:hover{
+	text-decoration:underline;
+}
+
+.logout a{
+	padding-left:20px;
+	background:url(../../img/logout_btn.gif) no-repeat left;
+}
+
+.content{
+	width:100%;
+	height:90%;
+}
+
+.left_box{
+	width:10%;
+	height:100%;
+	float:left;
+	background:url(../../img/sub_bg.png) repeat-y;
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+.left_index_bar{
+	width:90%;
+	float:right;
+}
+
+
+.left_index_bar dt{
+	width:100%;
+	height:43px;
+	font-weight:bold;
+	line-height:40px;
+	background:url(../../img/login_31.gif) repeat-x bottom;
+}
+
+.left_index_bar a{
+	display: block;
+	color:#d5e6f5;
+}
+.left_index_bar dt a{
+	width:100%
+}
+.left_index_bar dt:hover{
+	background-color:#326e99;
+}
+
+.left_index_bar dd li:hover{
+	background-color:#326e99;
+}
+
+.left_index_bar .dt_selected{
+	background:url(../../img/login_38.png) no-repeat;
+}
+
+.left_index_bar .dt_selected a{
+	color: #333;
+	padding-left: 5px;
+}
+
+.left_index_bar dd{
+	display:none;
+}
+
+.left_index_bar dd ul li{
+	height: 30px;
+	margin-left:20px;
+    list-style: none;
+    background: url(../../img/q.gif) no-repeat 0 12px;
+	padding-left:10px;
+	line-height:30px;
+}
+
+.left_index_bar dd ul li a{
+    height: 30px;
+    line-height: 30px;
+    padding-left: 3px;
+}
+
+.right_box{
+	width:89%;
+	height:100%;
+	float:left;
+    margin-left:2px;
+}

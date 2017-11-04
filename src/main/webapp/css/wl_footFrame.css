@@ -1,0 +1,72 @@
+/**
+ * 主css
+ * author wl
+ * data 2016-05-19
+ */
+
+*{
+	margin:0;padding:0;
+}
+
+div{
+	display:block;
+}
+
+.clearBoth{
+	clear:both;
+}
+
+body{
+	background: #FFF url(../skin/bg_body.jpg) repeat-x;
+	font-family:"宋体";
+	font-size:9pt;
+}
+
+a{
+	color:#000;
+	text-decoration:none;
+}
+
+img{ 
+   border-style:none; /* 解决ie8有边框问题 */
+} 
+
+.friend_link{
+	margin-top:10px;
+	padding:0 10px;
+	width:990;
+	min-height:100px;
+	background:#0255A3;
+	line-height:100px;
+	color:#FFF;
+	border-radius:20px;
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.friend_link span{
+	float:left;
+}
+
+.friend_link a{
+	color:#FFF;
+}
+
+.friend_link ul li{
+	list-style:none;
+	padding:0 10px;
+	float:left;
+}
+
+.friend_link a:hover{
+	text-decoration:underline;
+	color:red;
+}
+
+.footer{
+	width:100%;
+	min-height:50px;
+	margin-top:10px;
+	padding: 20px 0 5px 0;
+	line-height: 160%;
+	color: #727272;
+}

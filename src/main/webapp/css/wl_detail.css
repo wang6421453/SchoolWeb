@@ -1,0 +1,35 @@
+/**
+ * 详细页面css
+ * author wl
+ * data 2017-03-09
+ */
+
+   .navigation{
+       height:20px;
+       margin-top:10px;
+       font-size:13px;
+       border-bottom:2px solid blue;
+   }
+   
+   .navigation a{
+	   color:blue;
+   }
+   
+   .navigation a:hover{
+	   color:red;
+   }
+   
+   .content{
+      margin-top:10px;
+      min-height:580px;
+      /* text-align:center */
+   }
+
+   .title{
+      text-align:center;
+      font-size:30px;
+   }
+   .attach_msg{
+      margin-top:10px;
+      text-align:center;
+   }

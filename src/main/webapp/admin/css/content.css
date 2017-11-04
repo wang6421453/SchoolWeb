@@ -1,0 +1,128 @@
+/**
+ * 后台主css
+ * author wl
+ * data 2017-01-04
+ */
+html{
+	height:100%;
+}
+
+*{
+	margin:0;padding:0;
+}
+
+div{
+	display:block;
+}
+
+dt{
+	display: block;
+}
+
+.clearBoth{
+	clear:both;
+}
+
+body{
+	background-color: #f1f1f1;
+	font-family:"宋体";
+	font-size:14px;
+	height:100%;
+	overflow:hidden;
+}
+
+a{
+	color:#000;
+	text-decoration:none;
+}
+
+img{ 
+   border-style:none; /* 解决ie8有边框问题 */
+} 
+
+.content{
+   height:100%;
+   padding: 10px 20px;
+   overflow: hidden;
+}
+.content .title {
+   height: 42px;
+   border-bottom:1px solid #D6D6D6
+}
+
+.content .title span{
+	height: 42px;
+    overflow: hidden;
+    padding-left: 44px;
+    background-repeat: no-repeat;
+    background-position: left;
+    font-size: 16px;
+    color: #333333;
+    line-height: 30px;
+    font-weight: bold;
+	background-image: url(../imgs/icon_openDir.gif);
+}
+
+.wl_btn{
+	width:100px;
+	height:30px;
+}
+
+.top_box{
+	margin-top:10px;
+}
+
+.tableContainer{
+	margin-top:10px;
+}
+
+table{
+    width: 100%;
+    border: 1px #d6d6d6 solid;
+    border-bottom: none;
+    background-color: #fff;
+    table-layout:fixed;
+}
+
+table tr{
+	overflow:hidden;
+}
+table th{
+   height: 29px;
+   background: #F0F0F0;
+   border-bottom: 1px #d6d6d6 solid;
+   line-height: 29px;
+   text-align: left;
+   padding: 0px 10px;
+}
+
+table td{
+   text-align: left;
+   border-bottom: 1px #d6d6d6 solid;
+   color: #000000;
+   padding: 5px 10px;
+   white-space:nowrap; /**不进行换行*/
+   overflow:hidden;
+   text-overflow:ellipsis; /**超出部分显示...*/
+   /* height: 29px; */ 
+}
+
+.editor{
+	width:100%;
+	height:500px;
+	margin-top:10px;
+}
+
+.main input[type=input]{
+	width: 350px;
+    height: 20px;
+}
+
+
+.btn_lst{
+	margin-bottom:10px;
+}
+
+.main{
+	margin-top:10px;
+}

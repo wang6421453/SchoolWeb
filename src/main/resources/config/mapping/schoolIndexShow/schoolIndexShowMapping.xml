@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="wl.mapping.school.schoolIndexShowMapper">
+    
+    
+    <!-- 查询得到一个学校首页展示对象 -->
+    <select id="getSchoolLastestIndexShow" parameterType="schoolIndexShowVo" 
+        resultType="schoolIndexShowVo">
+        select id,title,business_type,commit_time,show_pic from wl_school_index_show
+        where status = 2
+        and business_type like '%${businessType}%'
+        ORDER BY COMMIT_TIME desc limit 5
+    </select>
+    
+    <!-- 查询首页展示数量 -->
+    <select id="getSchoolIndexShowCount" parameterType="schoolIndexShowVo" resultType="int">
+        select count(1) from wl_school_index_show where 1 = 1
+        and business_type like '%${businessType}%'
+        <if test="status != 0">
+	           and status = #{status}
+	    </if>
+    </select>
+    
+    <!-- 查询得到一个学校首页展示对象 -->
+    <select id="getSchoolIndexShowList" parameterType="schoolIndexShowVo" 
+        resultType="schoolIndexShowVo">
+        select a.id, a.title, a.content, a.business_type, a.create_time, a.commit_time, u.user_name as 'createUser', a.status, a.no, a.show_pic, a.click_rate 
+        from wl_school_index_show a 
+        left join wl_admin_user_info u on a.create_user = u.id
+        where 1 = 1
+        and a.business_type like '%${businessType}%'
+        <if test="status != 0">
+	           and a.status = #{status}
+	    </if>
+        <choose>
+          <when test="status == 2">
+              ORDER BY a.COMMIT_TIME desc
+          </when>
+          <when test ="status != 2">
+              ORDER BY a.create_time desc
+          </when>
+        </choose>
+         limit ${(pageNo-1) * pageSize}, ${pageSize}
+    </select>
+    
+    <!-- 根据id查询得到一个学校首页展示对象 -->
+    <select id="getSchoolIndexShowById" parameterType="String" 
+        resultType="schoolIndexShowVo">
+        select * from wl_school_index_show where id = #{id}
+    </select>
+    
+    <!-- 增加首页展示 -->
+    <insert id="addSchoolIndexShow" parameterType="schoolIndexShowVo">
+        insert into wl_school_index_show value(uuid(), #{title}, #{content}, #{businessType}, now(),
+        <!-- mybatis没有else只能用choose替代 -->
+        <choose>
+          <when test="status == 2">
+              now(),
+          </when>
+          <when test ="status != 2">
+             null,
+          </when>
+        </choose>
+        #{createUser}, #{status}, #{no}, #{showPic}, 0)
+    </insert>
+    
+    <!-- 删除首页展示 -->
+    <delete id="deleteSchoolIndexShow" parameterType="java.util.List">
+        delete from wl_school_index_show where id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>
+    </delete>
+    
+    <!-- 发布首页展示 -->
+    <update id="commitSchoolIndexShow" parameterType="java.util.List">
+        update wl_school_index_show 
+        set status = 2,
+        commit_time = now()
+        where id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>
+    </update>
+    
+    <!--更新首页展示 -->
+    <update id="updateSchoolIndexShow" parameterType="schoolIndexShowVo">
+        update wl_school_index_show 
+        set title = #{title},
+        content = #{content},
+        status = #{status},
+        no = #{no},
+        show_pic = #{showPic},
+        commit_time = 
+        <choose>
+          <when test="status == 2">
+              now()
+          </when>
+          <when test ="status != 2">
+             null
+          </when>
+        </choose>
+        where id = #{id}
+    </update>
+    
+    <!-- 增加一个点击率 -->
+    <update id="addClickRate" parameterType="String">
+        update wl_school_index_show
+        set click_rate = click_rate + 1
+        where id = #{id}
+    </update>
+</mapper>

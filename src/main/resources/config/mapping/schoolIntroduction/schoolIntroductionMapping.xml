@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="wl.mapping.school.schoolIntroductionMapper">
+    
+    <!-- 查询得到一个学校简介对象 -->
+    <select id="getSchoolIntroduction" resultType="schoolIntroductionVo">
+        select * from wl_school_introduction limit 1
+    </select> 
+    
+    <!-- 增加学校简介 -->
+    <insert id="addSchoolIntroduction" parameterType="schoolIntroductionVo">
+        insert into wl_school_introduction value(uuid(), #{content}, now(),now(), #{createUser})
+    </insert>
+    
+    <!--更新学校简介 -->
+    <update id="updateSchoolIntroduction" parameterType="schoolIntroductionVo">
+        update wl_school_introduction 
+        set content = #{content},
+        commit_time = now()
+        where id = #{id}
+    </update>
+</mapper>

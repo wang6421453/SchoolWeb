@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="wl.mapping.school.schoolBaseInfoMapper">
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+    使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+    resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+    User类就是users表所对应的实体类
+    -->
+    
+    <!-- 查询得到一个学校基本信息对象 -->
+    <select id="getSchoolLastestBaseInfo" parameterType="schoolBaseInfoVo" 
+        resultType="schoolBaseInfoVo">
+        select id,title,business_type,commit_time from wl_school_base_info
+        where status = 2
+        and business_type like '%${businessType}%'
+        ORDER BY COMMIT_TIME desc limit 7
+    </select>
+    
+    <!-- 查询基本信息数量 -->
+    <select id="getSchoolBaseInfoCount" parameterType="schoolBaseInfoVo" resultType="int">
+        select count(1) from wl_school_base_info where 1 = 1
+        and business_type like '%${businessType}%'
+        <if test="status != 0">
+	           and status = #{status}
+	    </if>
+    </select>
+    
+    <!-- 查询得到一个学校基本信息对象 -->
+    <select id="getSchoolBaseInfoList" parameterType="schoolBaseInfoVo" 
+        resultType="schoolBaseInfoVo">
+        select a.id, a.title, a.content, a.business_type, a.create_time, a.commit_time, u.user_name as 'createUser',a.status, a.click_rate
+        from wl_school_base_info a 
+        left join wl_admin_user_info u on a.create_user = u.id
+        where 1 = 1
+        and a.business_type like '%${businessType}%'
+        <if test="status != 0">
+	           and a.status = #{status}
+	    </if>
+        <choose>
+          <when test="status == 2">
+              ORDER BY a.COMMIT_TIME desc
+          </when>
+          <when test ="status != 2">
+              ORDER BY a.create_time desc
+          </when>
+        </choose>
+         limit ${(pageNo-1) * pageSize}, ${pageSize}
+    </select>
+    
+    <!-- 根据id查询得到一个学校基本信息对象 -->
+    <select id="getSchoolBaseInfoById" parameterType="String" 
+        resultType="schoolBaseInfoVo">
+        select * from wl_school_base_info where id = #{id}
+    </select>
+    
+    <!-- 增加基本信息 -->
+    <insert id="addSchoolBaseInfo" parameterType="schoolBaseInfoVo">
+        insert into wl_school_base_info value(uuid(), #{title}, #{content}, #{businessType}, now(),
+        <!-- mybatis没有else只能用choose替代 -->
+        <choose>
+          <when test="status == 2">
+              now()
+          </when>
+          <when test ="status != 2">
+             null
+          </when>
+        </choose>
+        ,#{createUser},#{status},0)
+    </insert>
+    
+    <!-- 删除基本信息 -->
+    <delete id="deleteSchoolBaseInfo" parameterType="java.util.List">
+        delete from wl_school_base_info where id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>
+    </delete>
+    
+    <!-- 发布基本信息 -->
+    <update id="commitSchoolBaseInfo" parameterType="java.util.List">
+        update wl_school_base_info 
+        set status = 2,
+        commit_time = now()
+        where id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>
+    </update>
+    
+    <!--更新基本信息 -->
+    <update id="updateSchoolBaseInfo" parameterType="schoolBaseInfoVo">
+        update wl_school_base_info 
+        set title = #{title},
+        content = #{content},
+        status = #{status},
+        commit_time = 
+        <choose>
+          <when test="status == 2">
+              now()
+          </when>
+          <when test ="status != 2">
+             null
+          </when>
+        </choose>
+        where id = #{id}
+    </update>
+    
+    <!-- 增加一个点击率 -->
+    <update id="addClickRate" parameterType="String">
+        update wl_school_base_info
+        set click_rate = click_rate + 1
+        where id = #{id}
+    </update>
+</mapper>

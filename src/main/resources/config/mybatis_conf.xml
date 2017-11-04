@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+       <!-- 开启驼峰命名配置 -->
+       <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <!-- 这样需要每个都配置别名 -->
+    <!-- <typeAlias alias="SchoolNewsVo" type="com.wl.school.admin.schoolNews.SchoolNewsVo"/> -->
+    <!-- 这会自动扫描包，生成默认别名(首字母小写),mapping里就可以不用写全名了 -->
+    <typeAliases>
+       <package name="com.wl.school"/>
+    </typeAliases>
+    
+    <!-- 集成到spring，无需配置数据源信息了 -->
+    
+    <mappers>
+       <mapper resource="config/mapping/login/loginMapping.xml"/>
+       <mapper resource="config/mapping/account/accountMapping.xml"/>
+       <mapper resource="config/mapping/schoolBaseInfo/schoolBaseInfoMapping.xml"/>
+       <mapper resource="config/mapping/schoolPersonInfo/schoolPersonInfoMapping.xml"/>
+       <mapper resource="config/mapping/schoolIndexShow/schoolIndexShowMapping.xml"/>
+       <mapper resource="config/mapping/schoolIntroduction/schoolIntroductionMapping.xml"/>     
+    </mappers>
+    
+</configuration>

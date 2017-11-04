@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="wl.mapping.school.accountMapper">
+ 
+    
+    <!-- 查询管理员账号数量 -->
+    <select id="getAdminUserCount" parameterType="adminUserVo" resultType="int">
+        select count(1) from wl_admin_user_info
+    </select>
+    
+    <!-- 查询得到学校管理员账号对象列表 -->
+    <select id="getAdminUserList" parameterType="adminUserVo" 
+        resultType="adminUserVo">
+        select u.*,r.remark as 'roleName' from wl_admin_user_info u 
+        LEFT JOIN wl_user_role ur on u.id = ur.USER_ID
+        LEFT JOIN wl_role_info r on r.id=ur.ROLE_ID 
+        where 1 = 1
+        order by create_time
+        limit ${(pageNo-1) * pageSize}, ${pageSize}
+    </select>
+    
+    <!-- 根据id查询得到一个学校管理员账号对象 -->
+    <select id="getAdminUserById" parameterType="String" 
+        resultType="adminUserVo">
+        select * from wl_admin_user_info where id = #{id}
+    </select>
+    
+    <!-- 增加管理员账号 -->
+    <insert id="addAdminUser" parameterType="adminUserVo">
+        insert into wl_admin_user_info value(#{id}, #{userName}, #{password}, null, #{realName}, now());
+        insert into wl_user_role value(uuid(), #{id}, 2);
+    </insert>
+    
+    <!-- 删除管理员账号 -->
+    <delete id="deleteAdminUser" parameterType="java.util.List">
+        delete from wl_admin_user_info where id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>;
+        delete from wl_user_role where user_id in
+          <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+          </foreach>;
+    </delete>
+    
+    
+    <!--更新管理员账号(不允许修改账号) -->
+    <update id="updateAdminUser" parameterType="adminUserVo">
+        update wl_admin_user_info 
+        set password = #{password},
+        ip = #{ip},
+        real_name = #{realName}
+        where id = #{id}
+    </update>
+    
+</mapper>
